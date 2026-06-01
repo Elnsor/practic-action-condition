@@ -27,5 +27,5 @@ jobs:
                 echo "show Deploy ..."
             - name: Emit Output
               id: id_output
-              run: echo "result=SUCCESS" >> ${ GITHUB_OUTPUT}
+              run: echo "result=SUCCESS" >> ${GITHUB_OUTPUT}
     
