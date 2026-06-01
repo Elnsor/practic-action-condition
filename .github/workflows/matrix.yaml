@@ -10,6 +10,7 @@ jobs:
                 exclude:
                     - node-version: 12
                       os-key: ubuntu-latest
+                    - node-version: 12
                       os-key: windows-latest
         continue-on-error: true
         runs-on: ${{ matrix.os-key }}
