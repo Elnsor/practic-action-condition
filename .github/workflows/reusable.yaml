@@ -2,7 +2,7 @@ name : Reusable Workflow
 on:
     workflow_call:
         inputs:
-            atrifact-name: 
+            artifact-name: 
                 default: dist
                 description: This is the downloded artifact
                 required: true 
