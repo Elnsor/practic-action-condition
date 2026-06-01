@@ -69,13 +69,13 @@ jobs:
   deploy:
     needs: build
     uses: ./.github/workflows/reusable.yaml
-    
   report:
     needs: [lint, deploy]
     if: failure()
     runs-on: ubuntu-latest
-    - name: Report Info
-      run: |
-        echo "Show Report..."
-        echo "${{ toJSON(githup) }}"
+    steps:
+        - name: Report Info
+          run: |
+            echo "Show Report..."
+            echo "${{ toJSON(github) }}"
 
