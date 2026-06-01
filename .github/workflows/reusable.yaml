@@ -7,8 +7,14 @@ on:
                 description: This is the downloded artifact
                 required: true 
                 type: string
+        outputs:
+            result:
+                description: "result of output or deploy job"
+                value: ${{ jobs.deploy.outputs.new-result }}
 jobs:
     deploy:
+        outputs:
+            new-result: ${{ steps.id_output.outputs.result}}
         runs-on: ubuntu-latest
         steps:
             - name: Download-Artifact
@@ -19,4 +25,7 @@ jobs:
               run: |
                 echo "Deploy && Upload .."
                 echo "show Deploy ..."
+            - name: Emit Output
+              id: id_output
+              run: echo "result=SUCCESS" >> ${ GITHUB_OUTPUT}
     
