@@ -9,11 +9,14 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v6
+      - name: Git Cach Path
+          id: cach-path
+          run: echo "dir=$(npm config git cache)" >> ${GITHUB_OUTPUT}
       - name: Cache dependencies
         id: cache
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
-          path: node-modules
+          path: ${{ steps.cach-path.outputs.dir }}
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         if: steps.cach.outputs.cach-hit != 'true'
@@ -25,11 +28,14 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v6
+      - name: Git Cach Path
+        id: cach-path
+        run: echo "dir=$(npm config git cache)" >> ${GITHUB_OUTPUT}
       - name: Cache dependencies
         id: cache
         uses: actions/cache@v5
         with:
-          path: node-modules
+          path: ${{ steps.cach-path.outputs.dir }}
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         if: steps.cach.outputs.cach-hit != 'true'
@@ -49,11 +55,14 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v6
+      - name: Git Cach Path
+        id: cach-path
+        run: echo "dir=$(npm config git cache)" >> ${GITHUB_OUTPUT}
       - name: Cache dependencies
         id: cache
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
-          path: node-modules
+          path: ${{ steps.cach-path.outputs.dir }}
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         if: steps.cach.outputs.cach-hit != 'true' 
@@ -69,6 +78,8 @@ jobs:
   deploy:
     needs: build
     uses: ./.github/workflows/reusable.yaml
+    with:
+        artifact-name: dist-files
   report:
     needs: [lint, deploy]
     if: failure()
